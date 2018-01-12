@@ -84,7 +84,7 @@ DATABASES = {
         'NAME': 'chain_visualization',
         'USER': 'sneha',
         'PASSWORD': 'sneha123',
-        'HOST': 'localhost',
+        'HOST': '',
         'PORT': '5432',
     }
 }
