@@ -1,1 +1,1 @@
-web: gunicorn chains.wsgi --log-file -
+web: gunicorn chains_visualization.wsgi --log-file -
