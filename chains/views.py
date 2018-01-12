@@ -2,28 +2,33 @@ from django.shortcuts import render
 import glob
 import os
 import json
+from collections import defaultdict
 
-CHAIN_PATH = '/Users/sneha/Documents/dev/narrate.ai/narratives/output/chains_dj_wapo/'
-files = glob.glob(os.path.join(CHAIN_PATH, '*.json'))
+from chains.models import Story, Chain
+
+
 # Create your views here.
 
 
 def index(request):
     if request.method == 'GET':
-        story_ids = []
-        for c_file in files:
-           story_ids.append(c_file.split('/')[-1].split('.')[0])
-
-        return render(request, 'chains/index.html', {'story_ids': story_ids})
+        publishers = dict()
+        for ch in Chain.objects.all():
+            if ch.story_id.publisher not in publishers:
+                publishers[ch.story_id.publisher] = []
+            publishers[ch.story_id.publisher].append(ch.story_id.id)
+        return render(request, 'chains/index.html', {'publishers': publishers})
 
 
 def view_chain(request, story_id):
     if request.method == 'GET':
-        with open(os.path.join(CHAIN_PATH, '{}.json'.format(story_id)), 'r') as f:
-            chains = json.load(f)
-        if not chains:
-            return render(request, 'No chains found!')
+        chains = eval(Chain.objects.get(story_id=story_id).chains)
         flattened_chains = []
+        story = Story.objects.get(id=story_id)
+        raw_text = story.text
+        publisher = story.publisher
+        country = story.country
         for chain in chains:
-            flattened_chains.append('\n'.join(['Q: {}, A:{}'.format(q_a[1], q_a[2]) for q_a in chain]))
-        return render(request, 'chains/chain.html', {'chains': flattened_chains})
+            flattened_chains.append([(q_a[1], q_a[2]) for q_a in chain])
+        return render(request, 'chains/chain.html', {'chains': flattened_chains, 'text': raw_text,
+                                                     'publisher': publisher, 'country': country})

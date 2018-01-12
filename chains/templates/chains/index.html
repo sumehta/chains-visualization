@@ -15,9 +15,11 @@
     </head>
 
     <body>
-
-    {% for story_id in story_ids %}
-    <a href="{% url 'chains:view_chain' story_id %}">{{story_id}}</a>
+    {% for pubname, stories in publishers.items %}
+        <h1>{{pubname}}</h1>
+        {% for story_id in stories %}
+         <a href="{% url 'chains:view_chain' story_id %}">{{story_id}}</a>
+        {% endfor %}
     {% endfor %}
     </body>
 

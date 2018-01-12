@@ -6,9 +6,9 @@ from django.db import models
 class Story(models.Model):
     id = models.IntegerField(primary_key=True)
     text = models.TextField()
-    publisher = models.CharField(max_length=200)
+    publisher = models.CharField(max_length=200, null=True)
     event_code = models.IntegerField(default=0)
-    country = models.CharField(max_length=200)
+    country = models.CharField(max_length=200, null=True)
 
 
 class Sentence(models.Model):
@@ -26,3 +26,6 @@ class Question(models.Model):
 
 class Chain(models.Model):
     id = models.AutoField(primary_key=True)
+    story_id = models.ForeignKey(Story, on_delete=models.CASCADE, null=True)
+    # store chains as string
+    chains = models.TextField(default='[]')

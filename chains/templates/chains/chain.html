@@ -15,13 +15,33 @@
     </head>
 
     <body>
-    <ul>
-    {% for chain in chains %}
 
-        <li>{{chain}}</li>
+    <div class="col-lg-9">
 
-    {% endfor %}
-    </ul>
+    <div class="col-sm-3 col-md-6" style="float: left; width: 50%;">
+
+        <ul>
+        {% for chain in chains %}
+            {% for q_a in chain %}
+            <li><h4><span class="label label-default">{{q_a.0}}</span></h4>{{q_a.1}}</li>
+            {% endfor %}
+             <hr>
+        {% endfor %}
+        </ul>
+      </div>
+
+      <div class="col-sm-3 col-md-6" style="float: left; width: 50%">
+        <h1>
+            Country: {{country}}
+        </h1>
+          <div style="font-size: 18px">
+          {{text}}
+            </div>
+      </div>
+
+ </div>
+
     </body>
+
 
 </html>
