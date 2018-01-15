@@ -1,0 +1,45 @@
+{% extends "chains/base.html" %}
+{% block details %}
+<div class="container-fluid">
+
+        <div class='btn-toolbar pull-right'>
+
+            <a href="{% url 'chains:view_chain' story_id %}" class="btn btn-info" role="button">Back</a>
+        </div>
+        <!--<div class="col-md-3 justify-content-md-right"><a href="{% url 'chains:index' %}" class="btn btn-default btn-secondary" role="button">View Details</a></div>-->
+        <!--<div class="col-md-7"></div>-->
+
+        <!--<div class="col-md-2 justify-content-md-right"><a href="{% url 'chains:index' %}" class="btn btn-default btn-secondary" role="button">Back</a></div>-->
+    </div>
+
+
+    <div class="col-md-4 text-center"><span class="badge">Sentence</span></div>
+ <div class="col-md-4 text-center"><span class="badge">Clauses</span></div>
+ <div class="col-md-4 text-center"><span class="badge">Questions</span></div>
+    <hr style="padding:5px; ">
+{% for k, v in sent_clause_questions.items%}
+    <div class="row">
+        <div class="col-md-4">
+            <h4>{{v.0.0}}</h4>
+          </div>
+        <div class="col-md-4" style="font-size: 18px">
+            <ul>
+            {% for clause in v.0.1 %}
+                <li>{{clause}}</li>
+        {% endfor %}
+                </ul>
+        </div>
+
+        <div class="col-md-4" style="font-size: 18px">
+            <ul>
+            {% for ques_ans in v.0.2 %}
+                <li>{{ques_ans.0}}</li>
+        {% endfor %}
+                </ul>
+        </div>
+
+ </div>
+<hr>
+{% endfor %}
+
+{% endblock %}
