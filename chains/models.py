@@ -11,21 +11,30 @@ class Story(models.Model):
     country = models.CharField(max_length=200, null=True)
 
 
+class Clause(models.Model):
+    id = models.AutoField(primary_key=True)
+    story = models.ForeignKey(Story, on_delete=models.CASCADE)
+    # save clauses as json to save rows
+    clauses = models.TextField(default='[]')
+
+
 class Sentence(models.Model):
     id = models.AutoField(primary_key=True)
     story = models.ForeignKey(Story, on_delete=models.CASCADE)
-    num = models.IntegerField(default=-1)
+    # save clauses as json to save rows
+    sentences = models.TextField(default='[]')
 
 
 class Question(models.Model):
     id = models.AutoField(primary_key=True)
-    sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
-    q_text = models.CharField(max_length=200)
-    a_text = models.CharField(max_length=200)
+    # sentence = models.ForeignKey(Clause, on_delete=models.CASCADE)
+    story = models.ForeignKey(Story, on_delete=models.CASCADE)
+    questions = models.TextField(default='[]')
+    # a_text = models.CharField(max_length=200)
 
 
 class Chain(models.Model):
     id = models.AutoField(primary_key=True)
-    story_id = models.ForeignKey(Story, on_delete=models.CASCADE, null=True)
+    story = models.ForeignKey(Story, on_delete=models.CASCADE, null=True)
     # store chains as string
     chains = models.TextField(default='[]')
