@@ -30,10 +30,11 @@
                 </ul>
         </div>
 
-        <div class="col-md-4" style="font-size: 18px">
+        <div class="col-md-4">
             <ul>
             {% for ques_ans in v.0.2 %}
-                <li>{{ques_ans.0}}</li>
+                <li><h4>{{ques_ans.0}}</h4>{{ques_ans.1}}</li>
+
         {% endfor %}
                 </ul>
         </div>
